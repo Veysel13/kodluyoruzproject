@@ -31,11 +31,16 @@ class HomeController extends Controller
 
         $file=$this->uploadManager->uploadFile(request()->all(),"image");
 
-        if ($file!=null){
-            $this->helper->dataUpload($file);
+        if ($file==null){
+            session()->flash("danger","Lütfen dosya seçiniz.");
+
+            return redirect()->back();
         }
 
-        session()->flash("success","Dosya başarı ile aktarıldı");
+        if ($this->helper->extensionControl($file,"xlsx")){
+            $this->helper->dataUpload($file);
+            session()->flash("success","Dosya başarı ile aktarıldı");
+        }
 
         return redirect()->route($this->_config["redirect"]);
     }

@@ -31,14 +31,17 @@ class UploadManager
     {
         $request = request();
 
-        foreach ($data[$type] as $imageId => $image) {
+        if (isset($data[$type]))
+        {
+            foreach ($data[$type] as $imageId => $image) {
 
-            $file = $type . '.' . $imageId;
-            $dir = 'file/' . now()->year;
+                $file = $type . '.' . $imageId;
+                $dir = 'file/' . now()->year;
 
-            if ($request->hasFile($file)) {
+                if ($request->hasFile($file)) {
 
-                return $request->file($file)->store($dir);
+                    return $request->file($file)->store($dir);
+                }
             }
         }
 

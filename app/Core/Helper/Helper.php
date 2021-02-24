@@ -28,4 +28,19 @@ class Helper
 
         Excel::import(new FileImports, $path);
     }
+
+    public function extensionControl($file,$ext=""){
+
+        //storage path özelliği
+        $info = pathinfo(storage_path().'/'.$file);
+
+        $info = pathinfo($file);
+
+        if (isset($info['extension']) && $ext==$info['extension']){
+            return true;
+        }
+
+        return false;
+
+    }
 }
